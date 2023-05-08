@@ -32,6 +32,7 @@ class MainViewController: UIViewController, SlideToSnoozeDelegate {
     @IBOutlet weak var actionsMenuButton: UIButton!
     @IBOutlet weak var actionsMenuButtonPanelView: UIView!
     @IBOutlet weak var statsPanelView: BasicStatsPanelView!
+    @IBOutlet weak var historyTableView: UITableView!
     @IBOutlet weak var careView: UIStackView!
     @IBOutlet weak var loopView: UIStackView!
     @IBOutlet weak var slideToSnoozeView: SlideToSnoozeView!
@@ -46,6 +47,7 @@ class MainViewController: UIViewController, SlideToSnoozeDelegate {
     // currently presented bedside view controller instance
     private var bedsideViewController: BedsideViewController?
     
+    var historyViewController = HistoryViewController()
     // the way that has already been moved during a pan gesture
     var oldXTranslation : CGFloat = 0
     
@@ -71,6 +73,14 @@ class MainViewController: UIViewController, SlideToSnoozeDelegate {
                                 showYesterdaysBgs: UserDefaultsRepository.showYesterdaysBgs.value)
         let skView = spriteKitView as! SKView
         skView.presentScene(chartScene)
+        
+        historyTableView.delegate = historyViewController
+        historyTableView.dataSource = historyViewController
+        if #available(iOS 15.0, *) {
+            historyTableView.sectionHeaderTopPadding = 0.0
+            historyTableView.rowHeight = 20
+            historyTableView.separatorStyle = .none
+        }
         
         // Register Gesture Recognizer so that the user can scroll
         // through the charts
@@ -349,7 +359,16 @@ class MainViewController: UIViewController, SlideToSnoozeDelegate {
         // => in that case the user has to know that the values are old!
         self.loadAndPaintCurrentBgData()
         self.loadAndPaintChartData(forceRepaint: forceRepaint)
+        
+        // Fetch Current Treatments
+        NightscoutService.singleton.readLatestTreatements { treatments in
+            TreatmentsStream.singleton.addNewJsonTreatments(jsonTreatments: treatments)
+        }
+        
+        print("redraw")
+        self.historyTableView.reloadData()
         self.loadAndPaintCareData()
+        
         
         AppleHealthService.singleton.sync()
     }
@@ -518,6 +537,7 @@ class MainViewController: UIViewController, SlideToSnoozeDelegate {
             if !currentNightscoutData.cob.isEmpty {
                 self.cobLabel.text = currentNightscoutData.cob
             }
+            
         })
     }
     
@@ -567,9 +587,7 @@ class MainViewController: UIViewController, SlideToSnoozeDelegate {
             self.paintDeviceStatusData(deviceStatusData: result)
         }
         
-        NightscoutService.singleton.readLatestTreatements { treatments in
-            TreatmentsStream.singleton.addNewJsonTreatments(jsonTreatments: treatments)
-        }
+
         self.paintDeviceStatusData(deviceStatusData: deviceStatusData)
     }
     

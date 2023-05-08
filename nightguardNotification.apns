@@ -1,5 +1,5 @@
 {
-      "Simulator Target Bundle": "de.my-wan.dhe.nightguard",
+      "Simulator Target Bundle": "t1dnz.de.my-wan.dhe.nightguard",
       "aps": {
         "alert": "Push Notifications Test",
         "sound": "default",

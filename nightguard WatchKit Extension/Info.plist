@@ -34,7 +34,7 @@
 		<key>NSExtensionAttributes</key>
 		<dict>
 			<key>WKAppBundleIdentifier</key>
-			<string>de.my-wan.dhe.nightguard.watchkitapp</string>
+			<string>t1dnz.de.my-wan.dhe.nightguard.watchkitapp</string>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>
 		<string>com.apple.watchkit</string>

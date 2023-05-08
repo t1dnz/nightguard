@@ -16,6 +16,7 @@
 		28B03A2E23F9C412000939E6 /* Bedside.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 28B03A3023F9C412000939E6 /* Bedside.storyboard */; };
 		28B03A3723F9CD8E000939E6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 28B03A3523F9CD8E000939E6 /* Localizable.strings */; };
 		28E3B4F12404075900A4EE25 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28E3B4F02404075800A4EE25 /* SnapshotHelper.swift */; };
+		2C8B5F212A08FB7000C6D68C /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C8B5F202A08FB7000C6D68C /* HistoryViewController.swift */; };
 		40D1F7A29C21E9ECF41D2DA5 /* Pods_nightguard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35C47360C52FE655DC6F79B4 /* Pods_nightguard.framework */; };
 		4302C65025D9C5480052777F /* TreatmentsStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302C64F25D9C5480052777F /* TreatmentsStream.swift */; };
 		4302C65725D9C7080052777F /* Treatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4302C65625D9C7080052777F /* Treatment.swift */; };
@@ -488,6 +489,7 @@
 		28B03A3623F9CD8E000939E6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; lineEnding = 0; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		28B03A3923F9CE6C000939E6 /* fi-FI */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "fi-FI"; path = "fi-FI.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		28E3B4F02404075800A4EE25 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SnapshotHelper.swift; sourceTree = "<group>"; };
+		2C8B5F202A08FB7000C6D68C /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
 		35C47360C52FE655DC6F79B4 /* Pods_nightguard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_nightguard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4302C64F25D9C5480052777F /* TreatmentsStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreatmentsStream.swift; sourceTree = "<group>"; };
 		4302C65625D9C7080052777F /* Treatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Treatment.swift; sourceTree = "<group>"; };
@@ -1214,6 +1216,7 @@
 				D1D55393225F8A3C006C143B /* BedsideViewController.swift */,
 				D16FC355226AE99F00AB4DE3 /* MenuActionController.swift */,
 				43CC9DF824E818BF0008F397 /* CareViewController.swift */,
+				2C8B5F202A08FB7000C6D68C /* HistoryViewController.swift */,
 			);
 			name = controllers;
 			sourceTree = "<group>";
@@ -1730,6 +1733,7 @@
 				D16C8ED72210377000192117 /* SnoozeActionsViewController.swift in Sources */,
 				D1F94ED4223FFF6C00BB0A4D /* StatsPeriodSelectorView.swift in Sources */,
 				4351E6AE1D2ADFBE001E4AE4 /* StatsPrefsViewController.swift in Sources */,
+				2C8B5F212A08FB7000C6D68C /* HistoryViewController.swift in Sources */,
 				D1D96CB621FAF6890035A60E /* WatchMessage.swift in Sources */,
 				4334D98024C32B6D00652D87 /* DateExtension.swift in Sources */,
 				43119B811C382A0E00DD6D35 /* AppConstants.swift in Sources */,
@@ -2119,7 +2123,7 @@
 				431E587E26DBCD300037F8EA /* de */,
 			);
 			name = Duration.storyboard;
-			path = /Users/dirk/workspace/nightguard/nightguard;
+			path = /Users/grahamjenson/src/nightguard/nightguard;
 			sourceTree = "<absolute>";
 		};
 		43647BD11BFF6435004389F9 /* Main.storyboard */ = {
@@ -2282,7 +2286,7 @@
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 792;
-				DEVELOPMENT_TEAM = BSAVUVP8PV;
+				DEVELOPMENT_TEAM = A88934VP44;
 				INFOPLIST_FILE = "nightguard WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2290,7 +2294,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 3.7.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguard.watchkitapp.watchkitextension";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguard.watchkitapp.watchkitextension";
 				PRODUCT_NAME = nightguard;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2313,7 +2317,7 @@
 				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 792;
-				DEVELOPMENT_TEAM = BSAVUVP8PV;
+				DEVELOPMENT_TEAM = A88934VP44;
 				INFOPLIST_FILE = "nightguard WatchKit Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2321,7 +2325,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 3.7.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguard.watchkitapp.watchkitextension";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguard.watchkitapp.watchkitextension";
 				PRODUCT_NAME = nightguard;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -2346,7 +2350,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 792;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = BSAVUVP8PV;
+				DEVELOPMENT_TEAM = A88934VP44;
 				IBSC_MODULE = scoutwatch_WatchKit_Extension;
 				INFOPLIST_FILE = "nightguard WatchKit App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2355,7 +2359,7 @@
 					"@loader_path/../Frameworks",
 				);
 				MARKETING_VERSION = 3.7.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguard.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguard.watchkitapp";
 				PRODUCT_NAME = nightguard;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
@@ -2379,7 +2383,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 792;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = BSAVUVP8PV;
+				DEVELOPMENT_TEAM = A88934VP44;
 				IBSC_MODULE = scoutwatch_WatchKit_Extension;
 				INFOPLIST_FILE = "nightguard WatchKit App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2388,7 +2392,7 @@
 					"@loader_path/../Frameworks",
 				);
 				MARKETING_VERSION = 3.7.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguard.watchkitapp";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguard.watchkitapp";
 				PRODUCT_NAME = nightguard;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = watchos;
@@ -2410,7 +2414,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 792;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = BSAVUVP8PV;
+				DEVELOPMENT_TEAM = A88934VP44;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = nightguard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2418,7 +2422,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.7.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguard";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguard";
 				PRODUCT_NAME = nightguard;
 				PROVISIONING_PROFILE = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -2439,7 +2443,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 792;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = BSAVUVP8PV;
+				DEVELOPMENT_TEAM = A88934VP44;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = nightguard/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -2447,7 +2451,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 3.7.3;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguard";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguard";
 				PRODUCT_NAME = nightguard;
 				PROVISIONING_PROFILE = "";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -2469,7 +2473,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguardTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguardTests";
 				PRODUCT_NAME = nightguard_tests;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -2489,7 +2493,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguardTests";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguardTests";
 				PRODUCT_NAME = nightguard_tests;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -2509,7 +2513,7 @@
 					"@loader_path/Frameworks",
 				);
 				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguardUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguardUITests";
 				PRODUCT_NAME = nightguard_uitests;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -2529,7 +2533,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguardUITests";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguardUITests";
 				PRODUCT_NAME = nightguard_uitests;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 5.0;
@@ -2554,7 +2558,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 792;
-				DEVELOPMENT_TEAM = BSAVUVP8PV;
+				DEVELOPMENT_TEAM = A88934VP44;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "nightguard Widget Extension/Info.plist";
@@ -2569,7 +2573,7 @@
 				MARKETING_VERSION = 3.7.3;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguard.widgetextension";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguard.widgetextension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
@@ -2595,7 +2599,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 792;
-				DEVELOPMENT_TEAM = BSAVUVP8PV;
+				DEVELOPMENT_TEAM = A88934VP44;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "nightguard Widget Extension/Info.plist";
@@ -2609,7 +2613,7 @@
 				);
 				MARKETING_VERSION = 3.7.3;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "de.my-wan.dhe.nightguard.widgetextension";
+				PRODUCT_BUNDLE_IDENTIFIER = "t1dnz.de.my-wan.dhe.nightguard.widgetextension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;

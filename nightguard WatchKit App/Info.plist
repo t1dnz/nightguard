@@ -28,7 +28,7 @@
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
 	<key>WKCompanionAppBundleIdentifier</key>
-	<string>de.my-wan.dhe.nightguard</string>
+	<string>t1dnz.de.my-wan.dhe.nightguard</string>
 	<key>WKWatchKitApp</key>
 	<true/>
 </dict>
