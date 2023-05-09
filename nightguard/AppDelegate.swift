@@ -65,7 +65,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         // Initialize the stored UserDefaultsData
-        TreatmentsStream.singleton.treatments = UserDefaultsRepository.treatments.value
+        TreatmentsStream.singleton.setTreatments(UserDefaultsRepository.treatments.value)
         
         let rootViewController = UIStoryboard(name: "Main", bundle: Bundle.main).instantiateInitialViewController()
 
@@ -182,7 +182,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
         
         // Store all treatments in UserDefaults
-        UserDefaultsRepository.treatments.value = TreatmentsStream.singleton.treatments
+        UserDefaultsRepository.treatments.value = TreatmentsStream.singleton.sortedTreatments()
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
@@ -190,7 +190,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
         // Store the In-Memory Treatments
-        UserDefaultsRepository.treatments.value = TreatmentsStream.singleton.treatments
+        UserDefaultsRepository.treatments.value = TreatmentsStream.singleton.sortedTreatments()
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {

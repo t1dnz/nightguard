@@ -58,7 +58,7 @@ class MainViewModel: ObservableObject, Identifiable {
         skScene = ChartScene(size: CGSize(width: bounds.width, height: chartSceneHeight), newCanvasWidth: bounds.width * 4, useContrastfulColors: false, showYesterdaysBgs: UserDefaultsRepository.showYesterdaysBgs.value)
         
         // Read stored historical data
-        TreatmentsStream.singleton.treatments = UserDefaultsRepository.treatments.value
+        TreatmentsStream.singleton.setTreatments(UserDefaultsRepository.treatments.value)
         
         refreshData(forceRefresh: true, moveToLatestValue: true)
         

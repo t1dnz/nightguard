@@ -13,28 +13,43 @@ class TreatmentsStream {
     
     static let singleton = TreatmentsStream()
     
-    var treatments : [Treatment] = []
-    // Map to be able to check in o(1) that a treatment is already contained in the treatments array
-    var containedIds : [String:String] = [:]
+    private var treatmentsCache = Dictionary<String, Treatment>()
     
-    // checks all passed JSon-Treatments and adds new ones to the Stream
-    // of treatments
+    // Adds treatments fetched as json dictionaries
     public func addNewJsonTreatments(jsonTreatments : [[String: Any]]) {
         
         // loop through all treatments and check whether we have new ones
         for jsonTreatment in jsonTreatments {
+            // Make sure all treatments have has "_id" "eventType" and "created_at"
             
-            if let eventType = jsonTreatment["eventType"] as? String {
+            if let eventType = jsonTreatment["eventType"] as? String,
+                let id = jsonTreatment["_id"] as? String,
+                let createdAt = jsonTreatment["created_at"] as? String {
+                
+                // convert created at
+                let timestamp = Double.fromIsoString(isoTime: createdAt)
+                
+                // carb and insulin values with defaults
+                let carbs = jsonTreatment["carbs"] as? Int ?? 0
+                let insulin = jsonTreatment["insulin"] as? Double ?? 0.0
                 
                 switch eventType {
                 case "Carb Correction":
-                    extractCarbCorrection(jsonTreatment)
+                    treatmentsCache[id] = CarbCorrectionTreatment.init(
+                        id: id, timestamp: timestamp, carbs: carbs
+                    )
                 case "Meal Bolus":
-                    extractMealBolus(jsonTreatment)
+                    treatmentsCache[id] = MealBolusTreatment.init(
+                        id: id, timestamp: timestamp, carbs: carbs, insulin: insulin
+                    )
                 case "Correction Bolus":
-                    extractCorrectionBolus(jsonTreatment)
+                    treatmentsCache[id] = CorrectionBolusTreatment.init(
+                        id: id, timestamp: timestamp, insulin: insulin
+                    )
                 case "Bolus Wizard":
-                    extractBolusWizard(jsonTreatment)
+                    treatmentsCache[id] = BolusWizardTreatment.init(
+                        id: id, timestamp: timestamp, insulin: insulin
+                    )
                 default:
                     // ignore all the rest
                     continue
@@ -42,91 +57,40 @@ class TreatmentsStream {
             }
         }
         
-        removeTreatmentsFromLastDay()
+        cleanUpOldTreatments()
     }
     
-    fileprivate func removeTreatmentsFromLastDay() {
-        
+    
+    public func setTreatments(_ treatments : [Treatment]) {
+        treatmentsCache.removeAll() // clear the cache
+        for t in treatments {
+            treatmentsCache[t.id] = t
+        }
+    }
+    
+    public func todaysTreatments() -> [Treatment] {
+        // return all todays treatments
         let startOfTime = TimeService.getStartOfCurrentDay()
-        
-        var treatmentsToKeep : [Treatment] = []
-        for treatment in treatments {
-            if treatment.timestamp >= startOfTime {
-                treatmentsToKeep.append(treatment)
-            }
-        }
-        
-        treatments = treatmentsToKeep
+        return treatmentsCache.values.filter { t in t.timestamp >= startOfTime }
     }
     
-    fileprivate func extractCarbCorrection(_ jsonTreatment: [String : Any]) {
-        
-        if let id = jsonTreatment["_id"] as? String {
-            if isNew(id: id) {
-                if let date = jsonTreatment["mills"] as? Double {
-                    let carbs = jsonTreatment["carbs"] as? Int ?? 0
-                    
-                    addTreatment(
-                        treatment:
-                            CarbCorrectionTreatment.init(id: id, timestamp: date, carbs: carbs))
-                }
-            }
-        }
-    }
-    fileprivate func extractMealBolus(_ jsonTreatment: [String : Any]) {
-        
-        if let id = jsonTreatment["_id"] as? String {
-            if isNew(id: id) {
-                if let createdAt = jsonTreatment["created_at"] as? String {
-                    let carbs = jsonTreatment["carbs"] as? Int ?? 0
-                    let insulin = jsonTreatment["insulin"] as? Double ?? 0.0
-                    
-                    addTreatment(
-                        treatment:
-                            MealBolusTreatment.init(id: id, timestamp: Double.fromIsoString(isoTime: createdAt), carbs: carbs, insulin: insulin))
-                }
-            }
-        }
+    public func sortedTreatments() -> [Treatment] {
+        // return all treatments in a sorted array
+        return treatmentsCache.values.sorted { t1, t2 in t1.timestamp > t2.timestamp}
     }
     
-    fileprivate func extractCorrectionBolus(_ jsonTreatment: [String : Any]) {
+    ///
+    /// Helper Methods
+    ///
+    
+    private func cleanUpOldTreatments() {
+        // remove any treatment older than 24 hours
+        let startOfTime = TimeService.getCurrentTime() - (60 * 60 * 24) // minus 24 hours of time
         
-        if let id = jsonTreatment["_id"] as? String {
-            if isNew(id: id) {
-                if let createdAt = jsonTreatment["created_at"] as? String {
-                    let insulin = jsonTreatment["insulin"] as? Double ?? 0.0
-                    
-                    addTreatment(
-                        treatment:
-                            CorrectionBolusTreatment.init(id: id, timestamp: Double.fromIsoString(isoTime: createdAt), insulin: insulin))
-                }
+        for treatment in treatmentsCache.values.filter({ t in t.timestamp >= startOfTime }) {
+            if treatment.timestamp < startOfTime {
+                treatmentsCache.removeValue(forKey: treatment.id)
             }
         }
-    }
-    
-    fileprivate func extractBolusWizard(_ jsonTreatment: [String : Any]) {
-        
-        if let id = jsonTreatment["_id"] as? String {
-            if isNew(id: id) {
-                if let createdAt = jsonTreatment["created_at"] as? String {
-                    let insulin = jsonTreatment["insulin"] as? Double ?? 0.0
-                    
-                    addTreatment(
-                        treatment:
-                            BolusWizardTreatment.init(id: id, timestamp: Double.fromIsoString(isoTime: createdAt), insulin: insulin))
-                }
-            }
-        }
-    }
-    
-    // checks whether the stream already has a treatment with 'id'
-    private func isNew(id : String) -> Bool {
-        return containedIds[id] == nil;
-    }
-    
-    // appends the treatment and remembers the id.
-    private func addTreatment(treatment : Treatment) {
-        containedIds[treatment.id] = treatment.id
-        treatments.append(treatment)
     }
 }

@@ -245,7 +245,7 @@ class ChartPainter {
     fileprivate func paintTreatments(_ context : CGContext, bgValues : [BloodSugar], maxBgValue : CGFloat) {
         
         var treatmentNumber = 0
-        for treatment in TreatmentsStream.singleton.treatments {
+        for treatment in TreatmentsStream.singleton.todaysTreatments() {
             if let mealBolusTreatment = treatment as? MealBolusTreatment {
                 
                 drawMealBolusValue(context,

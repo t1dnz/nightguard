@@ -76,11 +76,11 @@ class MainViewController: UIViewController, SlideToSnoozeDelegate {
         
         historyTableView.delegate = historyViewController
         historyTableView.dataSource = historyViewController
+        
         if #available(iOS 15.0, *) {
-            historyTableView.sectionHeaderTopPadding = 0.0
             historyTableView.rowHeight = 20
-            historyTableView.separatorStyle = .none
         }
+        historyTableView.reloadData()
         
         // Register Gesture Recognizer so that the user can scroll
         // through the charts
@@ -365,7 +365,6 @@ class MainViewController: UIViewController, SlideToSnoozeDelegate {
             TreatmentsStream.singleton.addNewJsonTreatments(jsonTreatments: treatments)
         }
         
-        print("redraw")
         self.historyTableView.reloadData()
         self.loadAndPaintCareData()
         

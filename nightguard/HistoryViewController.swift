@@ -15,7 +15,7 @@ class HistoryViewController : UIViewController, UITableViewDelegate, UITableView
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return TreatmentsStream.singleton.treatments.count
+        return TreatmentsStream.singleton.sortedTreatments().count
     }
     
     func timeAgoDisplay(_ ts: Double) -> String {
@@ -23,7 +23,7 @@ class HistoryViewController : UIViewController, UITableViewDelegate, UITableView
         
         if #available(iOS 13.0, *) {
             let formatter = RelativeDateTimeFormatter()
-            formatter.unitsStyle = .full
+            formatter.unitsStyle = .abbreviated
             return formatter.localizedString(for: date, relativeTo: Date()).padding(toLength:14,withPad:" ",startingAt:0)
         }
         
@@ -37,34 +37,37 @@ class HistoryViewController : UIViewController, UITableViewDelegate, UITableView
 //    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
-        if !TreatmentsStream.singleton.treatments.indices.contains(indexPath.row)  {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! UITableViewCell
+        let treatments = TreatmentsStream.singleton.sortedTreatments()
+        if !treatments.indices.contains(indexPath.row)  {
             cell.textLabel?.text = "unknown"
             return cell
         }
         
-        let treatment = TreatmentsStream.singleton.treatments[indexPath.row]
+        
+        let treatment = treatments[indexPath.row]
+        
+        let datelabel = "\(timeAgoDisplay(treatment.timestamp))"
+        
         if let mealBolusTreatment = treatment as? MealBolusTreatment {
-            cell.textLabel?.text = "\(timeAgoDisplay(mealBolusTreatment.timestamp))  -- Meal Bolus \(mealBolusTreatment.carbs)g \(mealBolusTreatment.insulin)u"
+            cell.textLabel?.text =  "\(datelabel) -- \(mealBolusTreatment.insulin)u for \(mealBolusTreatment.carbs)g "
         }
         
         if let correctionBolusTreatment = treatment as? CorrectionBolusTreatment {
-            cell.textLabel?.text = "\(timeAgoDisplay(correctionBolusTreatment.timestamp)) -- Bolus \(correctionBolusTreatment.insulin)u"
-
-
+            cell.textLabel?.text = "\(datelabel) -- \(correctionBolusTreatment.insulin)u Bolus"
         }
-        if let bolusWizardTreatment = treatment as? BolusWizardTreatment {
-            cell.textLabel?.text = "\(timeAgoDisplay(bolusWizardTreatment.timestamp)) -- Bolus \(bolusWizardTreatment.insulin)u"
         
-            
+        if let bolusWizardTreatment = treatment as? BolusWizardTreatment {
+            cell.textLabel?.text = "\(datelabel) -- \(bolusWizardTreatment.insulin)u Bolus"
         }
+        
         if let carbCorrectionTreatment = treatment as? CarbCorrectionTreatment {
-            cell.textLabel?.text = "\(timeAgoDisplay(carbCorrectionTreatment.timestamp)) -- Carbs \(carbCorrectionTreatment.carbs)g"
-
-
+            cell.textLabel?.text = "\(datelabel) -- \(carbCorrectionTreatment.carbs)g Carbs"
         }
         
         return cell
     }
     
 }
+
+
