@@ -22,20 +22,26 @@ class HistoryViewController : UIViewController, UITableViewDelegate, UITableView
         let date = Date(timeIntervalSince1970 : ts / 1000)
         
         if #available(iOS 13.0, *) {
-            let formatter = RelativeDateTimeFormatter()
+            let formatter = DateComponentsFormatter()
             formatter.unitsStyle = .abbreviated
-            return formatter.localizedString(for: date, relativeTo: Date()).padding(toLength:14,withPad:" ",startingAt:0)
+            formatter.includesApproximationPhrase = false
+            formatter.includesTimeRemainingPhrase = false
+            formatter.allowedUnits = [.hour, .minute]
+   
+            let now = Date()
+            
+            if let timeOffsetString = formatter.string(from: date, to: now) {
+                let relativeString = "\(timeOffsetString) ago"
+                return relativeString
+            }
+
         }
         
         let formatter  = DateFormatter()
         formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS"
         return formatter.string(from: date)
     }
-//    
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 100.0
-//    }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as! UITableViewCell
         let treatments = TreatmentsStream.singleton.sortedTreatments()
